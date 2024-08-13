@@ -69,9 +69,7 @@ class Game:
 
             self.can_shoot = False
             self.shoot_time = pygame.time.get_ticks()
-
-    def gun_timer(self):
-        if not self.can_shoot:
+        else:
             current_time = pygame.time.get_ticks()
             if current_time - self.shoot_time >= self.gun_cooldown:
                 self.can_shoot = True
@@ -120,8 +118,7 @@ class Game:
                 if event.type == self.enemy_event:
                     Enemy(choice(self.spawn_positions), choice(list(self.enemy_frames.values())), (self.all_sprites, self.enemy_sprites), self.player, self.collision_sprites)
 
-            # update 
-            self.gun_timer()
+            # update
             self.gun_shoot()
             self.all_sprites.update(dt)
             self.bullet_collision()
