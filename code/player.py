@@ -5,16 +5,34 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
 
         self.frames = {'left': [
-            join('images', 'player', 'left', '0.png'),
-            join('images', 'player', 'left', '1.png'),
-            join('images', 'player', 'left', '2.png'),
-            join('images', 'player', 'left', '3.png'),
-        ], 'right': [], 'up': [], 'down': []}
+            pygame.image.load(join('images', 'player', 'left', '0.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'left', '1.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'left', '2.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'left', '3.png')).convert_alpha(),
+        ], 'right': [
+            pygame.image.load(join('images', 'player', 'right', '0.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'right', '1.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'right', '2.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'right', '3.png')).convert_alpha(),
+        ], 'up': [
+            pygame.image.load(join('images', 'player', 'up', '0.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'up', '1.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'up', '2.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'up', '3.png')).convert_alpha(),
+        ], 'down': [
+            pygame.image.load(join('images', 'player', 'down', '0.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'down', '1.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'down', '2.png')).convert_alpha(),
+            pygame.image.load(join('images', 'player', 'down', '3.png')).convert_alpha(),
+        ]}
+
+        # self.load_images()
 
         self.state = 'down'
         self.frame_index = 0
-        self.image = pygame.image.load(join('images', 'player', 'down', '0.png')).convert_alpha()
-        self.rect = self.image.get_frect(center = pos)
+        self.image = self.frames[self.state][self.frame_index]
+
+        self.rect = self.image.get_frect(center=pos)
         self.hitbox_rect = self.rect.inflate(-60, -90)
 
         # movement
@@ -86,11 +104,11 @@ class Player(pygame.sprite.Sprite):
 
         # animate
         if self.direction:
-            self.frame_index = int(self.frame_index + dt * 5)
+            self.frame_index = self.frame_index + dt * 5
         else:
             self.frame_index = 0
 
-        self.image = self.frames[self.state][self.frame_index % len(self.frames[self.state])]
+        self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])]
 
     def update(self, dt):
         self.move(dt)
