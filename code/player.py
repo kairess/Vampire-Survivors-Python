@@ -3,7 +3,14 @@ from settings import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites):
         super().__init__(groups)
-        self.load_images()
+
+        self.frames = {'left': [
+            join('images', 'player', 'left', '0.png'),
+            join('images', 'player', 'left', '1.png'),
+            join('images', 'player', 'left', '2.png'),
+            join('images', 'player', 'left', '3.png'),
+        ], 'right': [], 'up': [], 'down': []}
+
         self.state = 'down'
         self.frame_index = 0
         self.image = pygame.image.load(join('images', 'player', 'down', '0.png')).convert_alpha()
