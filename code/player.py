@@ -4,7 +4,8 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites):
         super().__init__(groups)
         self.load_images()
-        self.state, self.frame_index = 'right', 0
+        self.state = 'down'
+        self.frame_index = 0
         self.image = pygame.image.load(join('images', 'player', 'down', '0.png')).convert_alpha()
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60, -90)
@@ -54,22 +55,35 @@ class Player(pygame.sprite.Sprite):
         for sprite in self.collision_sprites:
             if sprite.rect.colliderect(self.hitbox_rect):
                 if direction == 'horizontal':
-                    if self.direction.x > 0: self.hitbox_rect.right = sprite.rect.left
-                    if self.direction.x < 0: self.hitbox_rect.left = sprite.rect.right
+                    if self.direction.x > 0:
+                        self.hitbox_rect.right = sprite.rect.left
+                    if self.direction.x < 0:
+                        self.hitbox_rect.left = sprite.rect.right
                 else:
-                    if self.direction.y < 0: self.hitbox_rect.top = sprite.rect.bottom
-                    if self.direction.y > 0: self.hitbox_rect.bottom = sprite.rect.top
+                    if self.direction.y < 0:
+                        self.hitbox_rect.top = sprite.rect.bottom
+                    if self.direction.y > 0:
+                        self.hitbox_rect.bottom = sprite.rect.top
 
     def animate(self, dt):
-        # get state
         if self.direction.x != 0:
-            self.state = 'right' if self.direction.x > 0 else 'left'
+            if self.direction.x > 0:
+                self.state = 'right'
+            else:
+                self.state = 'left'
         if self.direction.y != 0:
-            self.state = 'down' if self.direction.y > 0 else 'up'
+            if self.direction.y > 0:
+                self.state = 'down'
+            else:
+                self.state = 'up'
 
         # animate
-        self.frame_index = self.frame_index + 5 * dt if self.direction else 0
-        self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])]
+        if self.direction:
+            self.frame_index = int(self.frame_index + dt * 5)
+        else:
+            self.frame_index = 0
+
+        self.image = self.frames[self.state][self.frame_index % len(self.frames[self.state])]
 
     def update(self, dt):
         self.move(dt)
