@@ -8,8 +8,8 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load(join('images', 'player', 'down', '0.png')).convert_alpha()
         self.rect = self.image.get_frect(center = pos)
         self.hitbox_rect = self.rect.inflate(-60, -90)
-    
-        # movement 
+
+        # movement
         self.direction = pygame.Vector2()
         self.speed = 500
         self.collision_sprites = collision_sprites
@@ -25,17 +25,29 @@ class Player(pygame.sprite.Sprite):
                         surf = pygame.image.load(full_path).convert_alpha()
                         self.frames[state].append(surf)
 
-    def input(self):
-        keys = pygame.key.get_pressed()
-        self.direction.x = int(keys[pygame.K_RIGHT] or keys[pygame.K_d]) - int(keys[pygame.K_LEFT] or keys[pygame.K_a])
-        self.direction.y = int(keys[pygame.K_DOWN] or keys[pygame.K_s]) - int(keys[pygame.K_UP] or keys[pygame.K_w])
-        self.direction = self.direction.normalize() if self.direction else self.direction
-
     def move(self, dt):
+        keys = pygame.key.get_pressed()
+
+        # 좌우 움직임 처리
+        move_right = keys[pygame.K_d]
+        move_left = keys[pygame.K_a]
+        self.direction.x = int(move_right - move_left)
+
+        # 상하 움직임 처리
+        move_down = keys[pygame.K_s]
+        move_up = keys[pygame.K_w]
+        self.direction.y = int(move_down - move_up)
+
+        # 대각선 이동 시 속도 정규화
+        if self.direction.length() > 0:
+            self.direction = self.direction.normalize()
+
         self.hitbox_rect.x += self.direction.x * self.speed * dt
         self.collision('horizontal')
+
         self.hitbox_rect.y += self.direction.y * self.speed * dt
         self.collision('vertical')
+
         self.rect.center = self.hitbox_rect.center
 
     def collision(self, direction):
@@ -49,7 +61,7 @@ class Player(pygame.sprite.Sprite):
                     if self.direction.y > 0: self.hitbox_rect.bottom = sprite.rect.top
 
     def animate(self, dt):
-        # get state 
+        # get state
         if self.direction.x != 0:
             self.state = 'right' if self.direction.x > 0 else 'left'
         if self.direction.y != 0:
@@ -60,6 +72,5 @@ class Player(pygame.sprite.Sprite):
         self.image = self.frames[self.state][int(self.frame_index) % len(self.frames[self.state])]
 
     def update(self, dt):
-        self.input()
         self.move(dt)
         self.animate(dt)

@@ -15,7 +15,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        # groups 
+        # groups
         self.all_sprites = AllSprites()
         self.collision_sprites = pygame.sprite.Group()
         self.bullet_sprites = pygame.sprite.Group()
@@ -23,15 +23,15 @@ class Game:
 
         # gun timer
         self.can_shoot = True
-        self.shoot_time = 0 
+        self.shoot_time = 0
         self.gun_cooldown = 500
 
-        # enemy timer 
+        # enemy timer
         self.enemy_event = pygame.event.custom_type()
         pygame.time.set_timer(self.enemy_event, 300)
         self.spawn_positions = []
-        
-        # audio 
+
+        # audio
         self.shoot_sound = pygame.mixer.Sound(join('audio', 'shoot.wav'))
         self.shoot_sound.set_volume(0.2)
         self.impact_sound = pygame.mixer.Sound(join('audio', 'impact.ogg'))
@@ -79,10 +79,10 @@ class Game:
 
         for x, y, image in map.get_layer_by_name('Ground').tiles():
             Sprite((x * TILE_SIZE,y * TILE_SIZE), image, self.all_sprites)
-        
+
         for obj in map.get_layer_by_name('Objects'):
             CollisionSprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
-        
+
         for obj in map.get_layer_by_name('Collisions'):
             CollisionSprite((obj.x, obj.y), pygame.Surface((obj.width, obj.height)), self.collision_sprites)
 
@@ -108,10 +108,10 @@ class Game:
 
     def run(self):
         while self.running:
-            # dt 
+            # dt
             dt = self.clock.tick() / 1000
 
-            # event loop 
+            # event loop
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
