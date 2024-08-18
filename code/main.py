@@ -14,7 +14,8 @@ BLACK = (0, 0, 0)  # 총알 색상
 # 게임 월드 크기 설정
 WORLD_WIDTH = 2560
 WORLD_HEIGHT = 1440
-WIDTH, HEIGHT = 1280, 720
+WIDTH = 1280
+HEIGHT = 720
 TILE_SIZE = 64
 PLAYER_SIZE = 64  # 플레이어 크기를 타일 크기와 동일하게 설정
 
