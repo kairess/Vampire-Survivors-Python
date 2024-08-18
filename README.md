@@ -17,5 +17,5 @@ python code/main.py
 
 ## Reference
 
-- https://github.com/clear-code-projects/5games
+- [Master Python by making 5 games [the new ultimate introduction to pygame]](https://youtu.be/8OMghdHP-zs?si=NSb5FGXmBx79rfM1)
 - YouTube [빵형의 개발도상국](https://www.youtube.com/@bbanghyong)
