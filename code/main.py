@@ -31,24 +31,23 @@ def load_images(path):
     return images
 
 # 플레이어 이미지 로드
-current_dir = './'
 player_images = {
-    'up': load_images(os.path.join(current_dir, 'images', 'player', 'up')),
-    'down': load_images(os.path.join(current_dir, 'images', 'player', 'down')),
-    'left': load_images(os.path.join(current_dir, 'images', 'player', 'left')),
-    'right': load_images(os.path.join(current_dir, 'images', 'player', 'right'))
+    'up': load_images(os.path.join('images', 'player', 'up')),
+    'down': load_images(os.path.join('images', 'player', 'down')),
+    'left': load_images(os.path.join('images', 'player', 'left')),
+    'right': load_images(os.path.join('images', 'player', 'right'))
 }
 
 enemy_images = {
-    'bat': load_images(os.path.join(current_dir, 'images', 'enemies', 'bat')),
-    'blob': load_images(os.path.join(current_dir, 'images', 'enemies', 'blob')),
-    'skeleton': load_images(os.path.join(current_dir, 'images', 'enemies', 'skeleton'))
+    'bat': load_images(os.path.join('images', 'enemies', 'bat')),
+    'blob': load_images(os.path.join('images', 'enemies', 'blob')),
+    'skeleton': load_images(os.path.join('images', 'enemies', 'skeleton'))
 }
 
 # 장애물 이미지 로드
 obstacle_images = [
-    pygame.image.load(os.path.join(current_dir, 'data', 'graphics', 'objects', 'green_tree_small.png')).convert_alpha(),
-    pygame.image.load(os.path.join(current_dir, 'data', 'graphics', 'objects', 'grassrock1.png')).convert_alpha(),
+    pygame.image.load(os.path.join('data', 'graphics', 'objects', 'green_tree_small.png')).convert_alpha(),
+    pygame.image.load(os.path.join('data', 'graphics', 'objects', 'grassrock1.png')).convert_alpha(),
 ]
 
 # 총알 클래스
